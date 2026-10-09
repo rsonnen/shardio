@@ -1,0 +1,56 @@
+[project]
+name = "shardio"
+version = "0.1.0"
+description = "Sharded ZIP archive storage with Parquet index for many-small-blob workloads"
+requires-python = ">=3.14"
+dependencies = ["pyarrow>=25.0.1"]
+authors = [{name = "Richard Sonnen", email = "richard@richardsonnen.com"}]
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["zip", "parquet", "storage", "sharding", "blob"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Archiving",
+]
+
+[project.urls]
+Repository = "https://github.com/rsonnen/shardio"
+Issues = "https://github.com/rsonnen/shardio/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-timeout>=2.4",
+    "ruff>=0.16.9",
+    "mypy>=2.3.1",
+]
+
+[build-system]
+requires = ["hatchling>=1.32.4"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/shardio"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "W"]
+
+[tool.mypy]
+strict = true
+python_version = "3.14"
+files = ["src/shardio", "tests"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: large-disk/long-running tests (run with -m slow)",
+]
+addopts = "-m 'not slow'"
+timeout = 60
