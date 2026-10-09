@@ -31,8 +31,8 @@ all: format-check lint typecheck test ## Every quality gate
 build: ## Build sdist and wheel into dist/
 	uv build
 
-publish: all build ## Run every gate, build, then upload to PyPI (token from UV_PUBLISH_TOKEN)
-	uv publish
+publish: all build ## Run every gate, build, then upload to PyPI (UV_PUBLISH_TOKEN from .env)
+	set -a && . ./.env && set +a && uv publish
 
 clean: ## Remove caches
 	rm -rf .pytest_cache .ruff_cache .mypy_cache
